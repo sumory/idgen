@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/sumory/baseN4go"
-	"strconv"
 	"sync"
 	"time"
 )
@@ -34,7 +33,7 @@ type IdWorker struct {
 	lastTimestamp int64
 	workerId      int64
 	mutex         *sync.Mutex
-	baseN4go      *BaseN //shorten the id
+	baseN4go      *baseN4go.BaseN //shorten the id
 }
 
 func NewIdWorker(workerId int64) (error, *IdWorker) {
@@ -47,7 +46,7 @@ func NewIdWorker(workerId int64) (error, *IdWorker) {
 	idWorker.lastTimestamp = -1
 	idWorker.sequence = 0
 	idWorker.mutex = &sync.Mutex{}
-	err, baseN := baseN4go.NewBaseN(int8(62))//默认radix为62，详见baseN4go
+	err, baseN := baseN4go.NewBaseN(int8(62)) //默认radix为62，详见baseN4go
 	if err != nil {
 		return errors.New("can not initialize 'baseN4go'"), nil
 	}
@@ -88,16 +87,16 @@ func (id *IdWorker) NextId() (error, int64) {
 	return nil, ((timestamp - idgenEpoch) << timestampLeftShift) | (id.workerId << workerIdShift) | id.sequence
 }
 
-func (id *IdWorker) Convert(source int64) string {
-	return strconv.FormatInt(source, 16)
-}
-
-func (id *IdWorker) ConvertWithRadix(source int64, radix int) string {
-	return strconv.FormatInt(source, radix)
-}
+//func (id *IdWorker) Convert(source int64) string {
+//	return strconv.FormatInt(source, 16)
+//}
+//
+//func (id *IdWorker) ConvertWithRadix(source int64, radix int) string {
+//	return strconv.FormatInt(source, radix)
+//}
 
 //重置用于shorten id的基数，参见baseN4go实现
-func (id *IdWorker) rabaseShortRadix(radix int8) error {
+func (id *IdWorker) RabaseShortRadix(radix int8) error {
 	err, baseN := baseN4go.NewBaseN(radix)
 	if err != nil {
 		return err
@@ -112,4 +111,14 @@ func (id *IdWorker) ShortId() (error, string) {
 		return err, ""
 	}
 	return id.baseN4go.Encode(newId)
+}
+
+func (id *IdWorker) ShortenId(genId int64) (error, string) {
+	return id.baseN4go.Encode(genId)
+}
+
+//返回id是由哪个workerId生成的
+func (id *IdWorker) WorkerId(genId int64) int64 {
+	workerId := uint(uint(genId<<42)>>54)
+	return int64(workerId)
 }
