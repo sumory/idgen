@@ -1,5 +1,7 @@
 ## id generator
 
+[![Build Status](https://travis-ci.org/sumory/idgen.svg?branch=master)](https://travis-ci.org/sumory/idgen)
+
 #### 介绍
 
  - 基于`snowflake`算法实现的id生成器
