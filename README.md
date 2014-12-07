@@ -21,7 +21,7 @@ go get github.com/sumory/idgen
 
 每个由idgen生成的id都是int64的正整数，且每个id都可以解析得到它的生成者的标识`workerId`.
 
-```
+```go
 workerId := 1
 err, idWorker := idgen.NewIdWorker(workerId)
 err, nextId := idWorker.NextId()
@@ -31,7 +31,7 @@ err, nextId := idWorker.NextId()
 
 idgen使用[baseN4go](https://github.com/sumory/baseN4go)缩短id，具体参见baseN4go使用方法.
 
-```
+```go
 workerId := 1
 err, idWorker := idgen.NewIdWorker(workerId)
 err, nextId := idWorker.ShortId()
@@ -39,7 +39,7 @@ err, nextId := idWorker.ShortId()
 
 ##### 获取生成器标识workerId
 
-```
+```go
 workerId := 1
 err, idWorker := idgen.NewIdWorker(workerId)
 err, nextId := idWorker.NextId()
@@ -56,7 +56,7 @@ wId := idWorker.WorkerId(newId)//wId == workerId
 
 需要[goconvey](https://github.com/smartystreets/goconvey)支持
 
-```
+```shell
 go get github.com/smartystreets/goconvey
 go test -v -cover // or $GOPATH/bin/goconvey
 ```
