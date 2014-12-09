@@ -1,6 +1,6 @@
 ## id generator
 
-[![Build Status](https://travis-ci.org/sumory/idgen.svg?branch=master)](https://travis-ci.org/sumory/idgen) [![](http://gocover.io/_badge/github.com/sumory/idgen)](http://gocover.io/github.com/sumory/idgen)
+[![Build Status](https://travis-ci.org/sumory/idgen.svg?branch=master)](https://travis-ci.org/sumory/idgen) [![](http://gocover.io/_badge/github.com/sumory/idgen)](http://gocover.io/github.com/sumory/idgen) [![license](http://img.shields.io/badge/license-MIT-red.svg?style=flat)](https://raw.githubusercontent.com/sumory/idgen/master/LICENSE)
 
 #### 介绍
 
